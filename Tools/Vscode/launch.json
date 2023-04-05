@@ -1,0 +1,101 @@
+// launch.json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "clangd-debug-wm",
+            "type": "lldb",
+            "request": "launch",
+            "program": "/integration/bin/mainboard",
+            "args": [
+                "-d",
+                "/integration/conf/pnc/etc/worldmodel/dag/worldmodel.dag"
+            ],
+            "cwd": "${workspaceFolder}",
+            "sourceLanguages": [
+                "C++"
+            ],
+            "stopOnEntry": false,
+            "preRunCommands": [],
+            "preLaunchTask": "run_wm_env",
+            "terminal": "integrated", // "integrated", "external", "console", 
+            "env": {
+                "GLOG_minloglevel": "1",
+                "GLOG_alsologtostderr": "1",
+                "GLOG_log_dir": "/root/world_model/logs",
+                "LD_LIBRARY_PATH": "/integration/lib/:/opt/ros/noetic/lib/",
+                "PATH": "$PATH:/integration/bin",
+                "CYBER_PATH": "/integration",
+                "CYBER_IP": "127.0.0.1",
+                "TERMINFO": "/usr/share/terminfo",
+                "TERM": "xterm-basic",
+            },
+        },
+        {
+            "name": "g++ mainboard",
+            "type": "gdb",
+            "request": "launch",
+            // "preLaunchTask": "Run",
+            "program": "/integration/bin/mainboard",
+            "args": [
+                "-d",
+                "/integration/conf/pnc/etc/worldmodel/dag/worldmodel.dag"
+            ],
+            "stopAtEntry": false,
+            "cwd": "/root",
+            "environment": [
+                {
+                    "name": "LD_LIBRARY_PATH",
+                    "value": "/opt/ros/noetic/lib/:/integration/lib:$LD_LIBRARY_PATH"
+                },
+                {
+                    "name": "PATH",
+                    "value": "$PATH:/integration/bin"
+                },
+                {
+                    "name": "CYBER_PATH",
+                    "value": "/integration"
+                },
+                {
+                    "name": "CYBER_IP",
+                    "value": "127.0.0.1"
+                },
+                {
+                    "name": "TERMINFO",
+                    "value": "/usr/share/terminfo"
+                },
+                {
+                    "name": "TERM",
+                    "value": "xterm-basic"
+                },
+                {
+                    "name": "GLOG_log_dir",
+                    "value": "./logs/"
+                },
+                {
+                    "name": "GLOG_minloglevel",
+                    "value": "0"
+                },
+                {
+                    "name": "GLOG_v",
+                    "value": "5"
+                },
+                {
+                    "name": "DISPLAY",
+                    "value": ":0"
+                },
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "miDebuggerPath": "/usr/bin/gdb"
+        }
+    ]
+}
+// https://github.com/vadimcn/vscode-lldb/blob/v1.7.0/MANUAL.md

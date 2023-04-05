@@ -1,0 +1,46 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "echo_cwd",
+            "command": "echo",
+            "args": [
+                "${cwd}"
+            ],
+            "options": {},
+            "problemMatcher": [],
+            // "group": {
+            //     "kind": "build",
+            //     "isDefault": true
+            // },
+            "detail": "Generated task by Debugger"
+        },
+        {
+            "type": "shell",
+            "label": "wm_debug_env",
+            "command": "source",
+            "args": [
+                "/root/.vscode/run_wm.sh"
+            ]
+        },
+        {
+            "label": "echo_env",
+            "type": "shell",
+            "command": "bash ${workspaceFolder}/environment"
+            //,
+            // "presentation": {
+            // 	"reveal": "silent",
+            // 	"focus": false
+            // }
+        },
+        {
+            "type": "shell",
+            "label": "run_wm_env",
+            "command": "source",
+            "args": [
+                "/root/.vscode/run_wm.sh"
+            ]
+        }
+    ],
+    "version": "2.0.0"
+}
