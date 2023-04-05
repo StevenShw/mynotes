@@ -45,7 +45,8 @@
     "clang.completion.completeMacros": false,
     // "clang.completion.enable": false,
     "clang-format.fallbackStyle": "google",
-    "clang-format.language.cpp.style": "/root/world_model/.clang-format",
+    "clang-format.language.cpp.style": "google",
+    "clang-format.assumeFilename": "/root/world_model/.clang-format",
     "clang-format.executable": "clang-format",
     //
     //
@@ -101,5 +102,5 @@
     "editor.fontFamily": "'Nerd Font Complete Mono', 'Nerd Font Mono', 'Noto Sans Mono', 'Droid Sans Mono', 'monospace', monospace",
     "terminal.integrated.fontFamily": "'Nerd Font Complete Mono', 'Nerd Font Mono','Noto Sans Mono', 'Droid Sans Mono', 'monospace', monospace",
     "terminal.integrated.allowChords": false,
-    "workbench.tree.renderIndentGuides": "always",
+    "workbench.tree.renderIndentGuides": "always"
 }
