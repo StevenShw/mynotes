@@ -38,14 +38,14 @@
         "--ranking-model=heuristics",
         "--enable-config",
         "--all-scopes-completion", // 全代码库补全
-        "--completion-style=bundled", // 详细补全
+        "--completion-style=bundled" // 详细补全
     ],
     "clangd.onConfigChanged": "restart",
     "clangd.restartAfterCrash": true,
     "clang.completion.completeMacros": false,
     // "clang.completion.enable": false,
     "clang-format.fallbackStyle": "google",
-    "clang-format.language.cpp.style": "google",
+    "clang-format.language.cpp.style": "file",
     "clang-format.assumeFilename": "/root/world_model/.clang-format",
     "clang-format.executable": "clang-format",
     //
