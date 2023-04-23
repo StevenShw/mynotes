@@ -17,6 +17,13 @@ sudo docker/script/dev_into.sh
 5.在docker中编译apollo源码
 sudo ./apollo.sh build
 
+- 编译测试文档
+    - /apollo/docs/01_Installation Instructions/apollo_build_and_test_explained.md
+    - 查看帮助
+    ```shell
+      ./apollo.sh --help
+    ```
+      
 6.启动 Dreamview
 sudo script/bootstrap.sh
 若正常启动，打开 <http://localhost:8888> 可以看到效果
