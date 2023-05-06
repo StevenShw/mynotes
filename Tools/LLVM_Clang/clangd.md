@@ -1,5 +1,10 @@
 # Clangd
 
+## 先安装clang
+```
+sudo apt install clang
+```
+
 ## 配置文件
 
 ### 系统用户级别
@@ -18,6 +23,8 @@ Diagnostics:
         google-*
         misc-*
         cppcoreguidelines-*
+        -Wno-documentation
+        -std=c++17 
       ]
     Remove:
       [
@@ -28,6 +35,7 @@ Diagnostics:
       WarnOnFloatingPointNarrowingConversion: false
 Index:
   Background: Build
+
 ```
 
 ### 项目级别
@@ -50,7 +58,7 @@ Index:
 		"--function-arg-placeholders=true", // 用tab切换
 		"--header-insertion-decorators", // 用圆点区分头文件是否已经插入
 		"-j=8",
-		"--query-driver=/usr/bin/clang++",
+		"--query-driver=/usr/bin/g++", // 取决于configure的时候用什么编译器
 		"--clang-tidy",
 		"--fallback-style=Google",
 		"--header-insertion=iwyu",
@@ -85,6 +93,8 @@ SET(CMAKE_C_FLAGS_RELEASE "$ENV{CFLAGS} -O3 -Wall")
 SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CFLAGS} -O0 -Wall -g -ggdb")
 SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CFLAGS} -O3 -Wall")
 ```
+
+// 下面的不再维护， 请vscode文件夹下面的配置
 
 ### tasks.json文件
 
@@ -190,3 +200,5 @@ vadim Chugunov开发的~
 ## 参考链接
 
 [https://clang.llvm.org/get_started.html](https://clang.llvm.org/get_started.html)
+
+[一个vscode下的使用教程](https://zsien.cn/vscode-uses-clangd-to-provide-intellisense-and-autocomplete/)

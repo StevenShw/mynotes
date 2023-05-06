@@ -1,13 +1,17 @@
 {
     // -------------- cmake
-    "cmake.configureEnvironment": {},
+    "cmake.configureEnvironment": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+    },
     "cmake.buildEnvironment": {
         "LD_LIBRARY_PATH": "/integration/lib"
     },
     "cmake.configureArgs": [
-        "-DCMAKE_INSTALL_PREFIX=${env:NIO_INSTALL_PREFIX}",
-        "-DCMAKE_TOOLCHAIN_FILE=${env:PNC_CMAKE_TC_FILE}",
-        "-DCMAKE_EXPORT_COMPILE_COMMANDS=1"
+        "-DDEBUG_VISUALIZER=ON",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DCMAKE_TOOLCHAIN_FILE=/root/toolchain.cmake",
+        "-DCMAKE_INSTALL_PREFIX=/root/pnc_out/x86"
+        // cmake .. -DDEBUG_VISUALIZER=ON -DCMAKE_EXPORT_COMPILE_COMMANDS=ON  -DCMAKE_TOOLCHAIN_FILE=/root/toolchain.cmake -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_INSTALL_PREFIX=/root/pnc_out/x86
     ],
     "cmake.sourceDirectory": "${workspaceFolder}",
     "cmake.buildDirectory": "${workspaceFolder}/build-clangd",
@@ -15,32 +19,50 @@
     // "cmake.buildDirectory": "/root/world_model/build-clangd",
     "cmake.configureOnOpen": false,
     "cmake.autoSelectActiveFolder": true,
+    "cmake.generator": "Unix Makefiles",
+    "cmake.preferredGenerators": [
+        "Kate - Unix Makefiles",
+        "Ninja",
+    ],
     // 
+    // 
+    //
+    // c/c++
+    // 关闭 C/C++ 插件冲突的功能 https://zsien.cn/vscode-uses-clangd-to-provide-intellisense-and-autocomplete/
+    // 因为还需要 Debug，所以不能完全禁用掉 C/C++ 插件。不过，像智能提示、自动补全、错误提示就都可以禁掉啦。
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "C_Cpp.autocomplete": "disabled",
+    "C_Cpp.errorSquiggles": "disabled",
+    //
+    //
+    //
     //
     ///--------------- clangd
     "clangd.path": "/root/.vscode-server/data/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/15.0.6/clangd_15.0.6/bin/clangd",
     "clangd.arguments": [
         // "--compile-commands-dir=/root/world_model/build-clangd/",
         "--compile-commands-dir=${workspaceFolder}/build-clangd/",
+        // "--compile-commands-dir=${workspaceFolder}/build/",
         "--background-index",
         "--completion-parse=auto",
         // When disabled, completions contain only parentheses for function calls.
         // When enabled, completions also contain placeholders for method parametersPcmake
         "--function-arg-placeholders=true", // 用tab切换
         "--header-insertion-decorators", // 用圆点区分头文件是否已经插入
-        "-j=8",
-        "--query-driver=/usr/bin/clang++",
+        "-j=12",
+        "--query-driver=/usr/bin/g++",
         "--clang-tidy",
         "--fallback-style=Google",
-        "--header-insertion=iwyu",
+        // "--header-insertion=iwyu",
+        "--header-insertion=never",
         "--pch-storage=memory",
         "--pretty",
         "--ranking-model=heuristics",
         "--enable-config",
         "--all-scopes-completion", // 全代码库补全
-        "--completion-style=bundled" // 详细补全
+        "--completion-style=bundled", // 详细补全
     ],
-    "clangd.onConfigChanged": "restart",
+    // "clangd.onConfigChanged": "restart",
     "clangd.restartAfterCrash": true,
     "clang.completion.completeMacros": false,
     // "clang.completion.enable": false,
@@ -48,11 +70,11 @@
     "clang-format.language.cpp.style": "file",
     "clang-format.assumeFilename": "/root/world_model/.clang-format",
     "clang-format.executable": "clang-format",
+    "clang-format.executable.linux": "/usr/bin/clang-format",
     //
     //
     //-------------- editor
     "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "modificationsIfAvailable",
     "editor.formatOnType": true,
     // "editor.parameterHints.enabled": false,
@@ -102,5 +124,12 @@
     "editor.fontFamily": "'Nerd Font Complete Mono', 'Nerd Font Mono', 'Noto Sans Mono', 'Droid Sans Mono', 'monospace', monospace",
     "terminal.integrated.fontFamily": "'Nerd Font Complete Mono', 'Nerd Font Mono','Noto Sans Mono', 'Droid Sans Mono', 'monospace', monospace",
     "terminal.integrated.allowChords": false,
-    "workbench.tree.renderIndentGuides": "always"
+    "workbench.tree.renderIndentGuides": "always",
+    "editor.defaultFormatter": "mjohns.clang-format",
+    "[cpp]": {
+        "editor.defaultFormatter": "mjohns.clang-format"
+    },
+    // "[cmake]": {
+    // 	"editor.defaultFormatter": "josetr.cmake-language-support-vscode"
+    // },
 }
