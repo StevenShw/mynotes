@@ -167,33 +167,50 @@
 
 ## .config文件夹下的设置
 ```
+#  ref: https://clangd.llvm.org/config#files
 Diagnostics:
+  UnusedIncludes: Strict
   ClangTidy:
     Add:
       [
         performance-*,
         bugprone-*,
         portability-*,
-        modernize-*,
+        modernize*,
         google-*,
         misc-*,
-        cppcoreguidelines-*
-        -std=c++17
-        -Wno-documentation
+        cppcoreguidelines-*,
       ]
-    Remove:
-      [
-        modernize-use-trailing-return-type,
-        modernize-use-nodiscard
-      ]
+    Remove: [modernize-use-trailing-return-type]
     CheckOptions:
       WarnOnFloatingPointNarrowingConversion: false
 Index:
+  StandardLibrary: Yes
   Background: Build
+  # Background: Skip # Disable slow background indexing of these files
 
-CompileFlags:
+InlayHints:
+  Designators: Yes
+  Enabled: Yes
+  ParameterNames: Yes
+  DeducedTypes: Yes
+
+Hover:
+  ShowAKA: Yes
+
+CompileFlags: # Tweak the parse settings
   Add: [
-        -include=/root/pnc_out/x86/include/worldmodel/traffic_light_processor/traffic_light_processor.h,
-        -I/root/pnc_out/x86/include
-        ]
+      -xc++,
+      -Wall,
+      -std=c++17,
+      -DDEBUG_VISUALIZER=ON,
+      -DBUILD_TESTS=OFF,
+      -DCMAKE_EXPORT_COMPILE_COMMANDS=ON,
+      -DCMAKE_TOOLCHAIN_FILE=/root/toolchain.cmake,
+      -DCMAKE_INSTALL_PREFIX=/root/pnc_out/x86,
+    ] # treat all files as C++, enable more warnings
+  Remove: -W* # strip all other warning-related flags
+  Compiler: g++ # Change argv[0] of compile flags to `clang++`
+  # CompilationDatabase: [/root/world_model/build-clangd]
+
 ```
