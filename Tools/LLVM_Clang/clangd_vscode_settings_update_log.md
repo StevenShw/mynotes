@@ -1,8 +1,8 @@
-# 230505
+# 230531
 ## vscode
 
 ```
-	{
+{
 	// -------------- cmake
 	"cmake.configureEnvironment": {
 		"CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
@@ -20,6 +20,7 @@
 	],
 	"cmake.sourceDirectory": "${workspaceFolder}",
 	"cmake.buildDirectory": "${workspaceFolder}/build-clangd",
+	"cmake.copyCompileCommands": "${workspaceFolder}/compile_commands.json",
 	// "cmake.sourceDirectory": "/root/world_model",
 	// "cmake.buildDirectory": "/root/world_model/build-clangd",
 	"cmake.configureOnOpen": false,
@@ -35,10 +36,10 @@
 	// c/c++
 	// 关闭 C/C++ 插件冲突的功能 https://zsien.cn/vscode-uses-clangd-to-provide-intellisense-and-autocomplete/
 	// 因为还需要 Debug，所以不能完全禁用掉 C/C++ 插件。不过，像智能提示、自动补全、错误提示就都可以禁掉啦。
-	"C_Cpp.errorSquiggles": "Disabled",
-	"C_Cpp.intelliSenseEngineFallback": "Disabled",
-	"C_Cpp.intelliSenseEngine": "Disabled",
-	"C_Cpp.autocomplete": "Disabled", // So you don't get autocomplete from both extensions.
+	"C_Cpp.errorSquiggles": "disabled",
+	"C_Cpp.intelliSenseEngineFallback": "disabled",
+	"C_Cpp.intelliSenseEngine": "disabled",
+	"C_Cpp.autocomplete": "disabled", // So you don't get autocomplete from both extensions.
 	//
 	//
 	//
@@ -59,9 +60,9 @@
 		//
 		// "--compile-commands-dir=/root/world_model/build-clangd/",
 		// "--compile-commands-dir=/root/world_model/build/",
-		"--compile-commands-dir=${workspaceFolder}/build-clangd/",
+		// "--compile-commands-dir=${workspaceFolder}",
 		// "--compile-commands-dir=/root/world_model/build/",
-		// "--compile-commands-dir=${workspaceFolder}/build/",
+		"--compile-commands-dir=${workspaceFolder}/build-clangd/",
 		//
 		"--background-index",
 		"--background-index-priority=normal",
@@ -72,7 +73,7 @@
 		"--function-arg-placeholders=true", // 用tab切换
 		"--header-insertion-decorators", // 用圆点区分头文件是否已经插入
 		"-j=12",
-		"--query-driver=/usr/bin/clang,/usr/bin/g++,/usr/bin/c++,/usr/bin/clang",
+		"--query-driver=/usr/bin/g++,/usr/bin/clang++,/usr/bin/c++,/usr/bin/clang",
 		"--fallback-style=Google",
 		"--header-insertion=never",
 		// pch优化的位置(memory 或 disk，选择memory会增加内存开销，但会提升性能) 推荐在板子上使用disk
@@ -87,8 +88,6 @@
 	"clangd.restartAfterCrash": true,
 	"clangd.checkUpdates": false,
 	// "clangd.trace": "verbose",
-	"clang.completion.completeMacros": false,
-	"clang.completion.enable": false,
 	"clang-format.fallbackStyle": "google",
 	"clang-format.language.cpp.style": "file",
 	"clang-format.assumeFilename": "${workspaceFolder}/.clang-format",
@@ -163,6 +162,7 @@
 	// 	"editor.defaultFormatter": "josetr.cmake-language-support-vscode"
 	// },
 }
+}
 ```
 
 ## .config文件夹下的设置
@@ -181,7 +181,7 @@ Diagnostics:
         misc-*,
         cppcoreguidelines-*,
       ]
-    Remove: [modernize-use-trailing-return-type]
+    Remove: [modernize-use-trailing-return-type, cppcoreguidelines-avoid-magic-numbers]
     CheckOptions:
       WarnOnFloatingPointNarrowingConversion: false
 Index:
@@ -204,7 +204,7 @@ CompileFlags: # Tweak the parse settings
       -Wall,
       -std=c++17,
       -DDEBUG_VISUALIZER=ON,
-      -DBUILD_TESTS=OFF,
+      -DBUILD_TESTS=ON,
       -DCMAKE_EXPORT_COMPILE_COMMANDS=ON,
       -DCMAKE_TOOLCHAIN_FILE=/root/toolchain.cmake,
       -DCMAKE_INSTALL_PREFIX=/root/pnc_out/x86,
